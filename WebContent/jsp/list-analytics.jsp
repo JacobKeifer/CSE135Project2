@@ -16,7 +16,7 @@ try{
 		<input type="hidden" value="<%= customer %>" name="rowSelector">
 		<input type="hidden" value="<%= order %>" name="order">
 		<input type="hidden" value="<%= filter %>" name="categoryFilter">
-		<input type="hidden" value="<%= offset1 + 2 %>" name="offset1">
+		<input type="hidden" value="<%= offset1 + 20 %>" name="offset1">
 		<input type="hidden" value="<%= offset2 %>" name="offset2">
 	</form>
 	
@@ -26,26 +26,28 @@ try{
 		<input type="hidden" value="<%= order %>" name="order">
 		<input type="hidden" value="<%= filter %>" name="categoryFilter">
 		<input type="hidden" value="<%= offset1 %>" name="offset1">
-		<input type="hidden" value="<%= offset2+2 %>" name="offset2">
+		<input type="hidden" value="<%= offset2+10 %>" name="offset2">
 	</form>  
 	
+	<%if(offset1 != 0){ %>
 	<form action="analytics" method="post">
 		<input type="submit" value="Previous 20 <%if(customer.equals("customer")) { %>Customers<%} else {%> States <%}%>">
 		<input type="hidden" value="<%= customer %>" name="rowSelector">
 		<input type="hidden" value="<%= order %>" name="order">
 		<input type="hidden" value="<%= filter %>" name="categoryFilter">
-		<input type="hidden" value="<%= offset1 - 2 %>" name="offset1">
+		<input type="hidden" value="<%= offset1 - 20 %>" name="offset1">
 		<input type="hidden" value="<%= offset2 %>" name="offset2">
-	</form> 
+	</form> <%} %>
 	
+	<%if(offset2 != 0) {%>
 	<form action="analytics" method="post">
 		<input type="submit" value="Previous 10 Products">
 		<input type="hidden" value="<%= customer %>" name="rowSelector">
 		<input type="hidden" value="<%= order %>" name="order">
 		<input type="hidden" value="<%= filter %>" name="categoryFilter">
 		<input type="hidden" value="<%= offset1 %>" name="offset1">
-		<input type="hidden" value="<%= offset2-2 %>" name="offset2">
-	</form> 
+		<input type="hidden" value="<%= offset2-10 %>" name="offset2">
+	</form> <%} %>
 <%
 if(customer.equals("customer")){
 List<UsersWithSales> usersData = AnalyticsHelper.listUsers(order, filter, offset1, offset2);
@@ -80,9 +82,9 @@ for(UsersWithSales data : usersData) {
 	if(i == 0){
 	   %>
 	   <tr>
-	   <td>
+	   <td><b>
 	   <%= data.getName() %> <br>
-	   (<%= data.getUserTotal() %>)
+	   (<%= data.getUserTotal() %>)</b>
 	   </td>
 <%
 	}
@@ -137,9 +139,9 @@ else{
 		if(i == 0){
 		   %>
 		   <tr>
-		   <td>
+		   <td><b>
 		   <%= data.getName() %> <br>
-		   (<%= data.getStateTotal() %>)
+		   (<%= data.getStateTotal() %>)</b>
 		   </td>
 	<%
 		}

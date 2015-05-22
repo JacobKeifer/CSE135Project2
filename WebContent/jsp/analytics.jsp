@@ -4,6 +4,7 @@
 <jsp:include page="/html/head.html" />
 </head>
 <%
+    long startTime = System.currentTimeMillis();
     boolean nameNotNull = session.getAttribute("name") != null;
     String role = (String) session.getAttribute("role");
     boolean roleIsOwner = (role != null) ? role
@@ -63,4 +64,11 @@
         </div>
     </div>
 </body>
+<%
+long elapsedTime = System.currentTimeMillis() - startTime;
+long elapsedSeconds = elapsedTime/1000;
+long seconds = elapsedSeconds%60;
+long minutes = elapsedSeconds/60;
+System.out.println("JSP: " + minutes + ":" + seconds + "      " + elapsedTime);
+%>
 </html>

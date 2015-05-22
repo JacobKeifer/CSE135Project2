@@ -19,9 +19,9 @@ private static String s1 = "Select t1.uName, t1.pName, t1.total, utotal, ptotal 
 "(Select uName, pName, COALESCE(quantity*price,0) as total "+
 "from "+
 "(Select * from "+
-"(select name as uName, id as uid from users order by uName limit 2 offset ?) as t1 "+
+"(select name as uName, id as uid from users order by uName limit 20 offset ?) as t1 "+
 "cross join "+
-"(select name as pName, id as pid from products order by pName limit 2 offset ?) as t2) as t3 "+
+"(select name as pName, id as pid from products order by pName limit 10 offset ?) as t2) as t3 "+
 "left join sales on t3.uid = sales.uid and t3.pid = sales.pid) as t4 "+
 "group by uName, pName) "+
 "order by uName, pName) as t1, "+
@@ -48,7 +48,7 @@ private static String s2 = "Select t1.state, t1.product, t1.sumtotal, t2.stotal,
 "(Select state, product, COALESCE(quantity*price,0) as total "+
 "From "+
 "(Select t1.name as State, t1.id as sid, t2.name as Product, t2.id as pid from "+
-"(Select * from states limit 10 offset ?) as t1 "+
+"(Select * from states limit 20 offset ?) as t1 "+
 "cross join "+
 "(select * from products limit 10 offset ?) as t2) as t3 left join "+
 "(Select users.state as sid, pid, quantity, price "+
@@ -88,7 +88,7 @@ private static String s3 = "select uname, product, sum(total) as total, utotal, 
 "(select uid, sum(quantity*price) as uTotal "+
 "from sales "+
 "group by uid) as t2 "+
-"on t1.id=t2.uid order by utotal desc limit 6 offset ?) as t1 "+
+"on t1.id=t2.uid order by utotal desc limit 20 offset ?) as t1 "+
 "cross join "+
 "(select product, t2.pid, COALESCE(ptotal,0) as ptotal from "+
 "(select pid, sum(quantity*price) as pTotal "+
@@ -96,7 +96,7 @@ private static String s3 = "select uname, product, sum(total) as total, utotal, 
 "group by pid) as t1 "+
 "right join "+
 "(select id as pid, name as product from products) as t2 "+
-"on t1.pid=t2.pid order by ptotal desc limit 6 offset ?) as t2) as t1 "+
+"on t1.pid=t2.pid order by ptotal desc limit 10 offset ?) as t2) as t1 "+
 "left join "+
 "sales as t2 "+
 "on t1.uid = t2.uid and t1.pid = t2.pid) as t1 "+
@@ -117,7 +117,7 @@ private static String s4 = "select t1.state, product, COALESCE(total,0) as total
 		"(select * from users) g2 "+
 		"on g1.uid = g2.id "+
 		"group by sid) as t2 "+
-		"on t1.id=t2.sid order by stotal desc limit 10 offset ?) as t1 "+
+		"on t1.id=t2.sid order by stotal desc limit 20 offset ?) as t1 "+
 		"cross join "+
 		"(select product, t2.pid, COALESCE(ptotal,0) as ptotal from "+
 		"(select pid, sum(quantity*price) as pTotal "+
@@ -125,7 +125,7 @@ private static String s4 = "select t1.state, product, COALESCE(total,0) as total
 		"group by pid) as t1 "+
 		"right join "+
 		"(select id as pid, name as product from products) as t2 "+
-		"on t1.pid=t2.pid order by ptotal desc limit 6 offset ?) as t2) as t1 "+
+		"on t1.pid=t2.pid order by ptotal desc limit 10 offset ?) as t2) as t1 "+
 		"full join "+
 		"(select state, pid, sum(total) as total from "+
 		"(Select users.state, sales.pid, quantity*price as total "+
@@ -143,7 +143,7 @@ private static String s5 = "Select t1.uName, t1.pName, t1.total, utotal, ptotal 
 		"(Select uName, pName, COALESCE(quantity*price,0) as total "+
 		"from "+
 		"(Select * from "+
-		"(select name as uName, id as uid from users order by uName limit 10 offset ?) as t1 "+
+		"(select name as uName, id as uid from users order by uName limit 20 offset ?) as t1 "+
 		"cross join "+
 		"(select name as pName, id as pid from products where cid = ? order by pName limit 10 offset ?) as t2) as t3 "+
 		"left join sales on t3.uid = sales.uid and t3.pid = sales.pid) as t4 "+
@@ -172,7 +172,7 @@ private static String s6 = "Select t1.state, t1.product, t1.sumtotal, t2.stotal,
 		"(Select state, product, COALESCE(quantity*price,0) as total "+
 		"From "+
 		"(Select t1.name as State, t1.id as sid, t2.name as Product, t2.id as pid from "+
-		"(Select * from states limit 10 offset ?) as t1 "+
+		"(Select * from states limit 20 offset ?) as t1 "+
 		"cross join "+
 		"(select * from products where cid = ? limit 10 offset ?) as t2) as t3 left join "+
 		"(Select users.state as sid, pid, quantity, price "+
@@ -212,7 +212,7 @@ private static String s7 = "select uname, product, sum(total) as total, utotal, 
 		"(select uid, sum(quantity*price) as uTotal "+
 		"from sales "+
 		"group by uid) as t2 "+
-		"on t1.id=t2.uid order by utotal desc limit 6 offset ?) as t1 "+
+		"on t1.id=t2.uid order by utotal desc limit 20 offset ?) as t1 "+
 		"cross join "+
 		"(select product, t2.pid, COALESCE(ptotal,0) as ptotal from "+
 		"(select pid, sum(quantity*price) as pTotal "+
@@ -220,7 +220,7 @@ private static String s7 = "select uname, product, sum(total) as total, utotal, 
 		"group by pid) as t1 "+
 		"right join "+
 		"(select id as pid, name as product from products where cid=?) as t2 "+
-		"on t1.pid=t2.pid order by ptotal desc limit 6 offset ?) as t2) as t1 "+
+		"on t1.pid=t2.pid order by ptotal desc limit 10 offset ?) as t2) as t1 "+
 		"left join "+
 		"sales as t2 "+
 		"on t1.uid = t2.uid and t1.pid = t2.pid) as t1 "+
@@ -241,7 +241,7 @@ private static String s8 = "select t1.state, product, COALESCE(total,0) as total
 		"(select * from users) g2 "+
 		"on g1.uid = g2.id "+
 		"group by sid) as t2 "+
-		"on t1.id=t2.sid order by stotal desc limit 10 offset ?) as t1 "+
+		"on t1.id=t2.sid order by stotal desc limit 20 offset ?) as t1 "+
 		"cross join "+
 		"(select product, t2.pid, COALESCE(ptotal,0) as ptotal from "+
 		"(select pid, sum(quantity*price) as pTotal "+
@@ -249,7 +249,7 @@ private static String s8 = "select t1.state, product, COALESCE(total,0) as total
 		"group by pid) as t1 "+
 		"right join "+
 		"(select id as pid, name as product from products where cid = ?) as t2 "+
-		"on t1.pid=t2.pid order by ptotal desc limit 6 offset ?) as t2) as t1 "+
+		"on t1.pid=t2.pid order by ptotal desc limit 10 offset ?) as t2) as t1 "+
 		"full join "+
 		"(select state, pid, sum(total) as total from "+
 		"(Select users.state, sales.pid, quantity*price as total "+
@@ -309,10 +309,19 @@ private static String s8 = "select t1.state, product, COALESCE(total,0) as total
         	  stmt.setInt(1,  offset1);
         	  stmt.setInt(2, offset2);
           }
+          long startTime = System.currentTimeMillis();
 	      rs = stmt.executeQuery();
+	      long elapsedTime = System.currentTimeMillis() - startTime;
+	      long elapsedSeconds = elapsedTime/1000;
+	      long seconds = elapsedSeconds%60;
+	      long minutes = elapsedSeconds/60;
+	      System.out.println("Query: " + minutes + ":" + seconds + "      " + elapsedTime);
 	      while(rs.next()){
 	        userName = rs.getString(1);
 	        productName = rs.getString(2);
+	        if(productName.length() > 10){
+	        	productName = productName.substring(0,10);
+	        }
 	        totalSales = rs.getFloat(3);
 	        uTotal = rs.getFloat(4);
 	        pTotal = rs.getFloat(5);
@@ -383,10 +392,19 @@ private static String s8 = "select t1.state, product, COALESCE(total,0) as total
 	    	  stmt.setInt(1, offset1);
 	    	  stmt.setInt(2, offset2);
 	      }
+	      long startTime = System.currentTimeMillis();
 	      rs = stmt.executeQuery();
+	      long elapsedTime = System.currentTimeMillis() - startTime;
+	      long elapsedSeconds = elapsedTime/1000;
+	      long seconds = elapsedSeconds%60;
+	      long minutes = elapsedSeconds/60;
+	      System.out.println("Query: " + minutes + ":" + seconds + "      " + elapsedTime);
 	      while(rs.next()){
 	        stateName = rs.getString(1);
 	        productName = rs.getString(2);
+	        if(productName.length() > 10){
+	        	productName = productName.substring(0,10);
+	        }
 	        totalSales = rs.getFloat(3);
 	        sTotal = rs.getFloat(4);
 	        pTotal = rs.getFloat(5);
