@@ -8,7 +8,7 @@ import java.sql.Statement;
 public class SignupHelper {
 
     public static String signup(String name, Integer age, String role, String state) {
-
+        System.out.println("Hello");
         Connection conn = null;
         Statement stmt;
 
@@ -28,7 +28,7 @@ public class SignupHelper {
                 conn.commit();
                 conn.setAutoCommit(true);
             } catch (SQLException e) {
-                return HelperUtils.printError(e.getLocalizedMessage());
+                return HelperUtils.printError("This user name is already taken");
             }
             conn.close();
         } catch (Exception e) {

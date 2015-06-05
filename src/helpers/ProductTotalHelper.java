@@ -2,22 +2,19 @@ package helpers;
 
 public class ProductTotalHelper {
   private String productName;
-  private float totalSales;
+  private float total;
   
-  public ProductTotalHelper(String productName, float sales){
+  public ProductTotalHelper(String productName, float total){
     this.productName = productName;
-    this.totalSales = sales;
+    this.total = total;
   }
   
   public String getProductName(){
     return this.productName;
   }
   
-  public float getSales(){
-    return this.totalSales;
+  public float getTotal(){
+    return this.total;
   }
   
-  public void setSales(float totalSales){
-	this.totalSales = 0;
-  }
 }

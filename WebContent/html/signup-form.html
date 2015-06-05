@@ -1,24 +1,28 @@
 
 <div class="container">
-    <form action="signup" method="post">
+    <form action="signup" method="get" id="form" onsubmit="return validate()">
         <table align="center">
-            <tr>
-                <td>Name:</td>
+            <tr> 
+                <td><p style="color: red; display: none" id="nameError"> Name not provided </p></td></tr>
+                <tr><td>Name:</td>
                 <td><input type="text" id="name" name="name"></td>
             </tr>
             <tr>
-                <td>Role:</td>
+                <td><p style="color: red; display: none" id="roleError"> Role not provided </p></td></tr>
+                <tr><td>Role:</td>
                 <td><select id="role" name="role">
                         <option>owner</option>
                         <option>customer</option>
                 </select></td>
             </tr>
             <tr>
-                <td>Age:</td>
+                <td><p style="color:red; display: none" id="ageError"> Age not provided </p></td></tr>
+                <tr><td>Age:</td>
                 <td><input type="text" id="age" name="age"></td>
             </tr>
             <tr>
-                <td>State:</td>
+                <td><p style="color:red; display: none" id="stateError"> State not provided </p></td></tr>
+                <tr><td>State:</td>
                 <td><select id="state" name="state">
                         <option>Alabama</option>
                         <option>Alaska</option>
@@ -73,8 +77,81 @@
                 </select></td>
             </tr>
             <tr>
-                <td><input type="submit" value="Signup"></td>
+                <td><input type="submit" value="Signup" id="submit"></td>
             </tr>
         </table>
     </form>
 </div>
+<script>
+    ////////////////////////////NEW//////////////////////////////////
+    //function that makes the validation on a user signup using ajax
+    function validate(){
+	var name = document.getElementById("name");
+	var role = document.getElementById("role");
+	var age = document.getElementById("age");
+	var state = document.getElementById("state");
+	var flag = true;
+	
+	//if a field was not filled in, then display an error message 
+    if(name.value === ""){
+    	document.getElementById("nameError").style.display = "";
+    	flag = false;
+    }
+    else{
+    	document.getElementById("nameError").style.display = "none";
+    }
+    
+    if(role.value === ""){
+    	document.getElementById("roleError").style.display = "";
+    	flag = false;
+    }
+    else{
+    	document.getElementById("roleError").style.display = "none";
+    }
+    
+    if(age.value === ""){
+    	document.getElementById("ageError").style.display = "";
+    	flag = false;
+    }
+    else{
+    	document.getElementById("ageError").style.display = "none";
+    }
+    
+    if(state.value === ""){
+    	document.getElementById("stateError").style.display = "";
+    	flag =  false;
+    }
+    else{
+    	document.getElementById("stateError").style.display = "none";
+    }
+    if(!flag)
+    	return false;
+    
+    //create new object to make the ajax request
+    var ajaxRequest;
+    try{
+    	ajaxRequest = new XMLHttpRequest();
+    }catch(e){
+    	try{
+    		ajaxRequest = new ActiveXObject("MSxml2.XMLHTTP");
+    	}catch(e){
+    		try{
+    			ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+    		}catch(e){
+    			return false;
+    		}
+    	}
+    }
+    //set the error message based off the response to the ajax request
+    ajaxRequest.onreadystatechange = function(){
+    	if(ajaxRequest.readyState == 4){
+    		document.getElementById("error1").innerHTML = ajaxRequest.responseText;
+    	}
+    }
+    //makes request to signup check to see if the signup is successful or not
+    var queryString = "?name="+name.value+"&role="+role.value+"&age="+age.value+"&state="+state.value;
+    ajaxRequest.open("GET", "signupCheck" + queryString, true);
+    ajaxRequest.send();
+    return false;
+};
+</script>

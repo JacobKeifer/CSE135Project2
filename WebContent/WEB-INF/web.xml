@@ -7,6 +7,14 @@
 		<jsp-file>/jsp/signup.jsp</jsp-file>
 	</servlet>
 	<servlet>
+		<servlet-name>refresh</servlet-name>
+		<jsp-file>/jsp/Refresh.jsp</jsp-file>
+	</servlet>
+	<servlet>
+		<servlet-name>signupCheck</servlet-name>
+		<jsp-file>/jsp/SignupCheck.jsp</jsp-file>
+	</servlet>
+	<servlet>
 		<servlet-name>login</servlet-name>
 		<jsp-file>/jsp/login.jsp</jsp-file>
 	</servlet>
@@ -45,6 +53,14 @@
 	<servlet-mapping>
 		<servlet-name>signup</servlet-name>
 		<url-pattern>/signup</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>refresh</servlet-name>
+		<url-pattern>/refresh</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>signupCheck</servlet-name>
+		<url-pattern>/signupCheck</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>login</servlet-name>

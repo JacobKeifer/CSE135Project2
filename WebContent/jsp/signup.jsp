@@ -14,6 +14,7 @@
                         <div class="page-header">
                             <h4>Sign Up</h4>
                         </div>
+                        <span id="error1">  </span>
                         <div class="row">
                             <%
                             	String name = null, role = null, state = null;
@@ -38,8 +39,15 @@
                             	} catch (Exception e) {
                             		state = null;
                             	}
-                            	if (name != null && age != null && role != null && state != null)
-                                    out.println(helpers.SignupHelper.signup(name, age, role, state));
+                            	System.out.println(name);
+                            	System.out.println(age);
+                            	System.out.println(role);
+                            	System.out.println(state);
+                            	if (name != null && age != null && role != null && state != null){
+                            		%>
+                            		
+                                    <%= helpers.SignupHelper.signup(name, age, role, state) %>
+                            	<%}
                             %>
                             <jsp:include page="/html/signup-form.html" />
                         </div>
